@@ -1,12 +1,25 @@
 ---
-- hosts: raiani_web
+- name: synch letsencrypt certs to nginx-proxy docker container from apache host to docker host
+  hosts: raiani_apache
+  gather_facts: no
   vars_prompt:
     - name: web_site
       prompt: Which web site cert are we syncing?
       private: no
   tasks:
-
-    - name: rsync le dirs to docker host
+    - name: rsync le archive dir to docker host
+      become: yes
       ansible.posix.synchronize:
-        src: /root
-
+        archive: yes
+        set_remote_user: no
+        src: /etc/letsencrypt/archive/{{ web_site }}
+        dest: docker.lan.raiani.com:/home/docker/nginx-proxy/letsencrypt/archive/
+      delegate_to: rvweb01.lan.raiani.com
+    - name: rsync le live dir to docker host
+      become: yes
+      ansible.posix.synchronize:
+        archive: yes
+        set_remote_user: no
+        src: /etc/letsencrypt/live/{{ web_site }}
+        dest: docker.lan.raiani.com:/home/docker/nginx-proxy/letsencrypt/live/
+      delegate_to: rvweb01.lan.raiani.com
