@@ -1,0 +1,19 @@
+---
+- name: create a file on rvweb01
+  hosts: raiani_apache
+  become: yes 
+  gather_facts: no
+  tasks:
+    - name: touch a file
+      ansible.builtin.file:
+        path: /root/ansible_touchfile.tmp
+        state: touch
+- name: do stuff on docker host
+  hosts: raiani_docker
+  tasks: 
+    - name: rsync file to docker host
+      ansible.posix.synchronize:
+        archive: yes
+        src: rsync://rvweb01.lan.raiani.com/root/ansible_touchfile.tmp
+        dest: /home/docker/tmp/
+      delegate_to: rvweb01.lan.raiani.com

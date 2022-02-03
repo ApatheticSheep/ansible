@@ -1,0 +1,12 @@
+---
+- hosts: raiani_web
+  vars_prompt:
+    - name: web_site
+      prompt: Which web site cert are we syncing?
+      private: no
+  tasks:
+
+    - name: rsync le dirs to docker host
+      ansible.posix.synchronize:
+        src: /root
+
