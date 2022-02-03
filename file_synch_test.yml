@@ -11,6 +11,7 @@
     - name: rsync file to docker host
       ansible.posix.synchronize:
         archive: yes
+        set_remote_user: no
         src: /root/ansible_touchfile.tmp
-        dest: rsync://docker.lan.raiani.com/home/docker/tmp/
+        dest: docker.lan.raiani.com:/home/docker/tmp/
       delegate_to: rvweb01.lan.raiani.com
