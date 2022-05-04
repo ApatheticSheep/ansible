@@ -1,6 +1,5 @@
 ---
 - name: synch letsencrypt certs to nginx-proxy docker container from apache host to docker host
-  hosts: raiani_apache
   gather_facts: no
   vars_prompt:
     - name: web_site
@@ -23,3 +22,16 @@
         src: /etc/letsencrypt/live/{{ web_site }}
         dest: docker.lan.raiani.com:/home/docker/nginx-proxy/letsencrypt/live/
       delegate_to: rvweb01.lan.raiani.com
+
+    - name: reload nginx proxy
+      hosts: raiani_docker
+      tags: reload-nginx
+      become: yes
+      remote_user: docker
+      community.docker.docker_container_exec:
+        container: nginx-proxy
+        command: nginx -s reload
+      register: result
+
+
+
