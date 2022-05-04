@@ -1,0 +1,14 @@
+---
+- name: reload nginx proxy
+  hosts: raiani_docker
+  remote_user: docker
+
+  tasks:
+    - name: install docker py
+      ansible.builtin.pip:
+        name: docker
+    - name: actually restart
+      community.docker.docker_container_exec:
+        container: nginx-proxy
+        command: nginx -s reload
+      register: result
