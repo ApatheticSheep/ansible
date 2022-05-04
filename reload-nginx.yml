@@ -1,0 +1,9 @@
+---
+- name: reload nginx proxy
+  hosts: raiani_docker
+  become: yes
+  remote_user: docker
+  community.docker.docker_container_exec:
+    container: nginx-proxy
+    command: nginx -s reload
+  register: result
