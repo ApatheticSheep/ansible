@@ -1,5 +1,6 @@
 ---
 - name: synch letsencrypt certs to nginx-proxy docker container from apache host to docker host
+  hosts: raiani_apache
   gather_facts: no
   vars_prompt:
     - name: web_site
