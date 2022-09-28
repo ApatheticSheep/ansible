@@ -1,7 +1,8 @@
 ---
 - name: reload nginx proxy
   hosts: raiani_docker
-  remote_user: docker
+  become: yes
+  gather_facts: no
 
   tasks:
     - name: install docker py
