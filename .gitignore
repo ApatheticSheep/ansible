@@ -1,0 +1,6 @@
+*.retry
+myhosts
+*.swp
+__pycache__
+.vscode
+.venv
