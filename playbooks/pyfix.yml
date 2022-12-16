@@ -4,14 +4,13 @@
   become: yes 
   gather_facts: no
   tasks:
+    - name: update apt-cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
     - name: install python-is-python3
-      ansible.builtin.file:
-        path: /root/ansible_touchfile.tmp
-        state: touch
-    - name: rsync file to docker host
-      ansible.posix.synchronize:
-        archive: yes
-        set_remote_user: no
-        src: /root/ansible_touchfile.tmp
-        dest: docker.lan.raiani.com:/home/docker/tmp/
-      delegate_to: rvweb01.lan.raiani.com
+      apt:
+        name: python-is-python3
+        state: present
+
+
