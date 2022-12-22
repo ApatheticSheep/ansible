@@ -8,37 +8,36 @@
       repo: 'deb https://apt.syncthing.net/ syncthing stable'
       state: present
       filename: 'syncthing'
-    tags:
-      - syncthing
 
   - name: Add the Syncthing GPG key
     apt_key:
       url: https://syncthing.net/release-key.txt
       state: present
-    tags:
-      - syncthing
 
   - name: Install Syncthing
     apt:
       name: syncthing
       state: latest
       update_cache: yes
-    tags:
-      - syncthing
 
   - name: Create the Syncthing systemd service unit
     template:
-      src: templates/syncthing.service.j2
+      src: ../templates/syncthing.service.j2
       dest: /etc/systemd/system/syncthing.service
       mode: 0644
-    tags:
-      - syncthing
+    vars:
+      ansible_user: syncthing
 
   - name: Enable the Syncthing systemd service
     systemd:
       name: syncthing
       state: started
       enabled: yes
-    tags:
-      - syncthing
+
+  - name: Create the syncthing user
+    user:
+      name: syncthing
+      shell: /bin/false
+      state: present
+
 
