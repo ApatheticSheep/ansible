@@ -9,7 +9,8 @@
       ansible.builtin.pip:
         name: docker
     - name: actually restart
-      community.docker.docker_container_exec:
-        container: nginx-proxy
+      docker_container:
+        name: nginx-proxy
+        state: started
         command: nginx -s reload
 
