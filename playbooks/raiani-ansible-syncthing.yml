@@ -1,5 +1,5 @@
 ---
-- hosts: syncthing
+- hosts: raiani_syncthing
   become: true
 
   tasks:
