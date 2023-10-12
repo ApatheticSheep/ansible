@@ -13,7 +13,7 @@
         archive: yes
         set_remote_user: no
         src: /etc/letsencrypt/archive/{{ web_site }}
-        dest: docker.lan.raiani.com:/home/docker/nginx-proxy/letsencrypt/archive/
+        dest: docker.lan.raiani.com:/home/docker/git/rvgit/docker/nginx-proxy/letsencrypt/archive/
       delegate_to: rvweb01.lan.raiani.com
     - name: rsync le live dir to docker host
       become: yes
@@ -21,7 +21,7 @@
         archive: yes
         set_remote_user: no
         src: /etc/letsencrypt/live/{{ web_site }}
-        dest: docker.lan.raiani.com:/home/docker/nginx-proxy/letsencrypt/live/
+        dest: docker.lan.raiani.com:/home/docker/git/rvgit/docker/nginx-proxy/letsencrypt/live/
       delegate_to: rvweb01.lan.raiani.com
 
 - name: reload nginx proxy
