@@ -24,18 +24,3 @@
         dest: docker.lan.raiani.com:/home/docker/git/rvgit/docker/nginx-proxy/letsencrypt/live/
       delegate_to: rvweb01.lan.raiani.com
 
-- name: reload nginx proxy
-  hosts: docker.lan.raiani.com
-  become: yes
-  gather_facts: no
-
-  tasks:
-    - name: install docker py
-      ansible.builtin.pip:
-        name: docker
-    - name: actually restart
-      docker_container:
-        name: nginx-proxy
-        state: started
-        command: nginx -s reload
-
